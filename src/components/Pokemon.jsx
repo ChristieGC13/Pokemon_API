@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import axios from 'axios';
 
 const Pokemon = () => {
     const [allPokes, setAllPokes] = useState([])
@@ -14,6 +15,13 @@ const Pokemon = () => {
         })
         .catch(err => console.log("error", err))
 
+        axios.get("https://pokeapi.co/api/v2/pokemon?limit=807")
+            .then(res => {
+                setAllPokes(res.data.results)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     return (
@@ -23,7 +31,7 @@ const Pokemon = () => {
                 {
                     allPokes.map((pokemon, i) => {
                         return (
-                            <li key = {i} > {pokemon.name} </li>
+                            <li key = {i} style={{textTransform: 'capitalize'}}> {pokemon.name} </li>
                         )
                     })
                 }
